@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] !== "POST") {
 }
 
 //Default Value
-$message = "Đăng nhập thành công <br/> Đang chuyển trang...";
+$message = " Login Successfull <br/> Redirecting....";
 $success = true;
 
 $user = $_POST['username'];
