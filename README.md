@@ -1,2 +1,2 @@
-# User-Controllers
+# User Controllers
 WordPress Plugin
