@@ -30,7 +30,7 @@ $secret_key  = '6Lc6nTUUAAAAADp1Q1yl5MjT-7EZZQ-LbswEh0Kc';
     //dữ liệu trả về dạng json
     $response = json_decode($response);
 if(isset($response->success) &&$response->success == true ){
-    $message = "Đăng nhập thành công <br/> Đang chuyển trang...";
+    $message = "Login Successful<br/> Redirecting....";
     $success = true;
 
     $name = $_POST['name'];
