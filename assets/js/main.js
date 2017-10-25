@@ -75,13 +75,14 @@ $(document).ready(function(){
 
     jQuery(".uc_form.profile").submit(function (e) {
         e.preventDefault();
-        var loading = toastr.info("Đang cập nhật thông tin.", "Processing", {timeOut:50000, extendedTimeOut:5000});
+        var loading = toastr.info("Updating information....", "Processing", {timeOut:50000, extendedTimeOut:5000});
         //Check input data before send to server
         $(this).find(".submit i").removeAttr('class').addClass("fa fa-refresh fa-spin").css({"color": "#fff"});
         $(".submit").css({"background": "#2ecc71", "border-color": "#2ecc71"});
         $("input").css({"border-color": "#2ecc71"});
 
         _action = $(this).attr("action");
+        $(".input-error").html("").hide();
         $.ajax({
             type: "POST",
             url: _action,
@@ -92,14 +93,13 @@ $(document).ready(function(){
                     toastr.success(data.message);
                 }
                 else {
-                    $(".input-error").html("").hide();
                     $.each(data.message, function (index, value) {
                         $("#" + index + " .input-error").html(value);
                         $("#" + index + " .input-error").show();
                         $("#" + index + " input").css({"border-color": "#cc2d07"});
                     });
 
-                    toastr.error("Cập nhật thông tin không thành công")
+                    toastr.error("Information updated successfully!")
                 }
             },
             complete: function (e) {
@@ -118,7 +118,7 @@ jQuery(document).ready(function(){
 
     jQuery('#photoimg').on('change', function()
     {
-        var loading = toastr.info("Đang cập nhật ảnh đại diện.", "Loading", {timeOut:50000, extendedTimeOut:5000});
+        var loading = toastr.info("Updating Avatar....", "Loading", {timeOut:50000, extendedTimeOut:5000});
         var formData = new FormData($("#cropimage")[0]);
 
         $.ajax({
@@ -134,7 +134,7 @@ jQuery(document).ready(function(){
             {
                 if (data.success === true) {
                     $("#avatar-edit-img").attr("src", data.message.img);
-                    toastr.success("Cập nhật ảnh đại diện thành công");
+                    toastr.success("Avatar updated successfully!!");
                     if(data.redirect !== false)
                         window.location.replace(data.redirect);
                 }
