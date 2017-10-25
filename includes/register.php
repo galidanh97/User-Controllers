@@ -51,7 +51,7 @@ if(isset($response->success) &&$response->success == true ){
 
     if ($user == "" || $pass =="" || $name == "" || $repass == "") {
         $success = false;
-        $message = "Nhap dau du thong tin!!";
+        $message = "Enter full information, please!!";
     }
     else {
         $query="select * from $wpdb->users where user_login='$user'";
@@ -61,13 +61,20 @@ if(isset($response->success) &&$response->success == true ){
         $count= $wpdb->num_rows;
 
         if($count == 0){
-		wp_create_user($user, $pass);
-		$message = "Tao tai khoan thanh cong";
+        	if($pass==$repass){
+        		wp_create_user($user, $pass);
+				$message = "Register Successful!!";
+        	}
+        	else{
+        		$success = false;
+            	$message = "password is not confirmed" ;
+        	}
+		
         }
         else
         {
             $success = false;
-            $message = "Tai khoan da ton tai!!!!!!!!!!!!!" ;
+            $message = "username has existed!!" ;
         }
      
     
@@ -75,7 +82,7 @@ if(isset($response->success) &&$response->success == true ){
 }
 else{
 	$success = false;
-        $message = "Xác minh bạn không phải robot" ;
+        $message = "confirm that you are not a robot??" ;
 }
 //Ajax response
     echo json_encode(["success"=> $success, "message"=>$message]);
