@@ -32,7 +32,7 @@ function updateProfile(){
     $response = json_decode($response);
 
     if(isset($response->success) && $response->success == true ) {
-        $message = "Cập nhật thông tin thành công";
+        $message = "Update Successfull!!";
         $success = true;
 
         $name = $_POST['name'];
@@ -43,25 +43,25 @@ function updateProfile(){
         $reNewPassword = $_POST['re-new-password'];
 
         if(!isset($name) ||$name =="")
-            $errorItems['name'] = "Không được bỏ trống họ và tên.";
+            $errorItems['name'] = "Fill in your Name";
 
         if(!isset($email) ||$email =="")
-            $errorItems['email'] = "Không được bỏ trống Email.";
+            $errorItems['email'] = "Fill in your Email.";
 
         elseif(filter_var($email, FILTER_VALIDATE_EMAIL)==false)
-            $errorItems['email'] = "Địa chỉ email không hợp lệ.";
+            $errorItems['email'] = "Your email address is incorrect!!";
 
         if(!isset($currentPassword) ||$currentPassword =="")
-            $errorItems['current-password'] = "Không được bỏ trống mật khẩu hiện tại.";
+            $errorItems['current-password'] = "Fill in your current password";
         else {
             $result = $wpdb->get_results("select ID, user_pass from $wpdb->users where ID='{$user->ID}'");
             if (wp_check_password($currentPassword, $result[0]->user_pass, $user->ID) == false)
-                $errorItems['current-password'] = "Mật khẩu hiện tại không đúng";
+                $errorItems['current-password'] = "The current password is incorrect!!";
         }
 
         if( (isset($newPassword) && $newPassword != '') || (isset($reNewPassword) && $reNewPassword != ''))
             if($newPassword !== $reNewPassword)
-                $errorItems['re-new-password'] = "Mật khẩu nhập lại không khớp";
+                $errorItems['re-new-password'] = "These password don't match. Try again!";
         if(count($errorItems) === 0)
         {
             $data = array();
@@ -71,7 +71,7 @@ function updateProfile(){
                 wp_set_password($newPassword, $user->ID);
             $wpdb->update('wp_users', $data, array('ID' => $user->ID));
             $success = true;
-            $message = "Đã cập nhật thông tin thành công";
+            $message = "Update Successful";
         }
         else {
             //Error:
@@ -81,7 +81,7 @@ function updateProfile(){
     }
     else{
         $success = false;
-        $message = array('captcha'=>"Xác minh bạn không phải robot") ;
+        $message = array('captcha'=>"Confirm that you are not robot!") ;
     }
 //Ajax response
     echo json_encode(["success"=> $success, "message"=>$message]);
